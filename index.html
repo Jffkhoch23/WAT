@@ -1,41 +1,120 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<style>
-    body {
-        background-color: rgb(255, 255, 255);
-        font-family: rgb(255, 255, 255);
-    }
-
-    .login {
-        position: fixed;
-        top: 10px;
-        right: 10px;
-        
-        
-        font-size: 20px;
-        background-color: blue;
-        border-radius:6px ;
-        color: blue;
-    }
-</style>
-
+<html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>titel URL</title>
+  <meta charset="UTF-8">
+  <title>Planeten im Sonnensystem</title>
+  <style>
+    * {margin:0; padding:0; box-sizing:border-box;}
+    body {
+      background: radial-gradient(circle at center, #000010, #000000);
+      color: white;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .solar-system {
+      display: flex;
+      gap: 20px;
+    }
+    .planet {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      cursor: pointer;
+      animation: rotate 10s linear infinite;
+      transition: all 0.5s ease;
+    }
+    .planet:hover {
+      transform: scale(1.2);
+    }
+    @keyframes rotate {
+      from {transform: rotate(0deg);}
+      to {transform: rotate(360deg);}
+    }
+    /* Farben für Planeten */
+    .merkur {background: gray;}
+    .venus {background: orange;}
+    .erde {background: deepskyblue;}
+    .mars {background: red;}
+    .jupiter {background: sandybrown;}
+    .saturn {background: goldenrod;}
+    .uranus {background: lightblue;}
+    .neptun {background: royalblue;}
+
+    /* Popup */
+    .info {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      background: rgba(20,20,30,0.95);
+      padding: 20px;
+      border-radius: 12px;
+      width: 300px;
+      text-align: center;
+      opacity: 0;
+      transition: all 0.5s ease;
+    }
+    .info.active {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+    .info h2 {
+      margin-bottom: 10px;
+    }
+    .close-btn {
+      margin-top: 15px;
+      background: #007bff;
+      border: none;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .close-btn:hover {
+      background: #0056b3;
+    }
+  </style>
 </head>
-
-<div class="login">
-
-<Button:hover>
-        <a href="login.php">Login</a>
-</Button:hover>
-
-</div>
-
 <body>
-    <h1>.</h1>
-    <p>.</p>
+  <div class="solar-system">
+    <div class="planet merkur" data-name="Merkur" data-info="Kleinster Planet. Umlaufzeit 88 Tage."></div>
+    <div class="planet venus" data-name="Venus" data-info="Fast so groß wie die Erde. Sehr heiß."></div>
+    <div class="planet erde" data-name="Erde" data-info="Unser Heimatplanet. 71% Wasser."></div>
+    <div class="planet mars" data-name="Mars" data-info="Der rote Planet. 2 Monde: Phobos und Deimos."></div>
+    <div class="planet jupiter" data-name="Jupiter" data-info="Größter Planet. Großer roter Fleck."></div>
+    <div class="planet saturn" data-name="Saturn" data-info="Berühmt für seine Ringe."></div>
+    <div class="planet uranus" data-name="Uranus" data-info="Liegt auf der Seite, rotiert ungewöhnlich."></div>
+    <div class="planet neptun" data-name="Neptun" data-info="Äußerster Planet. Sehr stürmisch."></div>
+  </div>
+
+  <!-- Info Popup -->
+  <div class="info" id="infoBox">
+    <h2 id="planetName"></h2>
+    <p id="planetInfo"></p>
+    <button class="close-btn" onclick="closeInfo()">Schließen</button>
+  </div>
+
+  <script>
+    const planets = document.querySelectorAll('.planet');
+    const infoBox = document.getElementById('infoBox');
+    const planetName = document.getElementById('planetName');
+    const planetInfo = document.getElementById('planetInfo');
+
+    planets.forEach(p => {
+      p.addEventListener('click', () => {
+        planetName.textContent = p.dataset.name;
+        planetInfo.textContent = p.dataset.info;
+        infoBox.classList.add('active');
+      });
+    });
+
+    function closeInfo() {
+      infoBox.classList.remove('active');
+    }
+  </script>
 </body>
 </html>
